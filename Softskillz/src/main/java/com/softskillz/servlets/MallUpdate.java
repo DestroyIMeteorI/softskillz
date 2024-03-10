@@ -7,28 +7,43 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class MallUpdate
- */
+import com.softskillz.dao.ProductDAO;
+import com.softskillz.models.Product;
+
 @WebServlet("/MallUpdate")
 public class MallUpdate extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public MallUpdate() {
-        super();
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 更新操作通常是基於表單提交的，所以這裡可以提示不支持GET請求
-        response.getWriter().append("Update functionality is not supported via GET method.");
+        // 從請求中獲取資料
+        String productId = request.getParameter("id");
+        String productName = request.getParameter("name");
+        String productDescription = request.getParameter("description");
+        String category = request.getParameter("category");
+        String price = request.getParameter("price");
+        String stock = request.getParameter("stock");
+        boolean isUpdated = false;
+        
+        // 驗證並轉換資料，調用 DAO 更新商品
+        if (productId != null && productName != null && productDescription != null && category != null && price != null && stock != null) {
+            Product product = new Product();
+            product.setProductId(Integer.parseInt(productId));
+            product.setProductName(productName);
+            product.setProductDescription(productDescription);
+            product.setCategoryId(Integer.parseInt(category));
+            product.setProductPrice(Integer.parseInt(price));
+            product.setProductStock(Integer.parseInt(stock));
+
+            ProductDAO productDao = new ProductDAO();
+            isUpdated = productDao.updateProduct(product);
+        }
+        
+        // 設定更新結果屬性並重定向到 CRUD 結果顯示頁面
+        request.getSession().setAttribute("crudResult", isUpdated ? "Update successful" : "Update failed");
+        response.sendRedirect("crudResult.jsp");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: 實現更新商品的邏輯
-        // 示例: String productName = request.getParameter("name");
-        // 根據接收的參數進行處理，例如更新商品資訊到資料庫
-
-        // 重定向到商品列表頁面或顯示成功訊息
-        response.sendRedirect("mall/admin/product/MallSelect.jsp");
+        doGet(request, response);
     }
 }

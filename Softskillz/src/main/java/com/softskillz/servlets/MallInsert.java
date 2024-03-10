@@ -7,28 +7,41 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class MallInsert
- */
+import com.softskillz.dao.ProductDAO;
+import com.softskillz.models.Product;
+
 @WebServlet("/MallInsert")
 public class MallInsert extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public MallInsert() {
-        super();
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 處理GET請求
-        response.getWriter().append("Insert functionality is not supported via GET method.");
+        // 從請求中獲取資料
+        String productName = request.getParameter("name");
+        String productDescription = request.getParameter("description");
+        String category = request.getParameter("category");
+        String price = request.getParameter("price");
+        String stock = request.getParameter("stock");
+        boolean isInserted = false;
+        
+        // 驗證並轉換資料，調用 DAO 新增商品
+        if (productName != null && productDescription != null && category != null && price != null && stock != null) {
+            Product product = new Product();
+            product.setProductName(productName);
+            product.setProductDescription(productDescription);
+            product.setCategoryId(Integer.parseInt(category));
+            product.setProductPrice(Integer.parseInt(price));
+            product.setProductStock(Integer.parseInt(stock));
+
+            ProductDAO productDao = new ProductDAO();
+            isInserted = productDao.addProduct(product);
+        }
+        
+        // 設定新增結果屬性並重定向到 CRUD 結果顯示頁面
+        request.getSession().setAttribute("crudResult", isInserted ? "Insert successful" : "Insert failed");
+        response.sendRedirect("crudResult.jsp");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: 實現新增商品的邏輯
-        // 示例: String productName = request.getParameter("name");
-        // 根據接收的參數進行處理，例如新增商品到資料庫
-
-        // 重定向到商品列表頁面或顯示成功訊息
-        response.sendRedirect("mall/admin/product/MallSelect.jsp");
+        doGet(request, response);
     }
 }

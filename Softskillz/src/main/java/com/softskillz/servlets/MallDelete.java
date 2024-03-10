@@ -7,44 +7,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet 實現類 MallDelete
- */
+import com.softskillz.dao.ProductDAO;
+
 @WebServlet("/MallDelete")
 public class MallDelete extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 默認構造函數。
-     */
     public MallDelete() {
         super();
-        // TODO 自動生成的構造函數存根
     }
 
-    /**
-     * 處理 HTTP GET 請求。
-     * @param request servlet 請求
-     * @param response servlet 回應
-     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 示例：從請求中獲取要刪除的商品 ID
         String productId = request.getParameter("id");
+        boolean isDeleted = false;
         
-        // TODO: 實現從資料庫中刪除該商品的邏輯
-        // 例如，調用 DAO 類的方法根據商品 ID 進行刪除
+        // 呼叫 DAO 刪除商品
+        ProductDAO productDao = new ProductDAO();
+        if (productId != null && !productId.trim().isEmpty()) {
+            int id = Integer.parseInt(productId);
+            isDeleted = productDao.deleteProduct(id);
+        }
         
-        // 刪除後重定向到確認頁面或商品列表頁面
-        response.sendRedirect("path/to/confirmation/page.jsp");
+        // 設定刪除結果屬性並重定向到 CRUD 結果顯示頁面
+        request.getSession().setAttribute("crudResult", isDeleted ? "Delete successful" : "Delete failed");
+        response.sendRedirect("crudResult.jsp");
     }
 
-    /**
-     * 處理 HTTP POST 請求。
-     * @param request servlet 請求
-     * @param response servlet 回應
-     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 如果您希望 POST 請求和 GET 請求相同的處理方式，可以調用 doGet 方法
         doGet(request, response);
     }
 }
