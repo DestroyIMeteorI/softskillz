@@ -11,7 +11,7 @@ public class PhysicalBook {
     private int bookPrice;
     private int bookStockQuantity;
     private String bookDescription;
-    private LocalDate bookPublishDate; // 使用 LocalDate 替代 Date
+    private LocalDate bookPublishDate; 
     private String bookImageUrl;
 
     public int getBookId() {

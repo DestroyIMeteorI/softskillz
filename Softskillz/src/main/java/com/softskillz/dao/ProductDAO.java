@@ -29,7 +29,7 @@ public class ProductDAO {
                 product.setProductName(resultSet.getString("product_name"));
                 product.setProductDescription(resultSet.getString("product_description"));
                 product.setCategoryId(resultSet.getInt("category_id"));
-                product.setProductPrice(resultSet.getDouble("product_price"));
+                product.setProductPrice(resultSet.getInt("product_price"));
                 product.setProductStock(resultSet.getInt("product_stock"));
                 product.setProductImageUrl(resultSet.getString("product_image_url"));
                 products.add(product);
@@ -52,7 +52,7 @@ public class ProductDAO {
                     product.setProductName(resultSet.getString("product_name"));
                     product.setProductDescription(resultSet.getString("product_description"));
                     product.setCategoryId(resultSet.getInt("category_id"));
-                    product.setProductPrice(resultSet.getDouble("product_price"));
+                    product.setProductPrice(resultSet.getInt("product_price"));
                     product.setProductStock(resultSet.getInt("product_stock"));
                     product.setProductImageUrl(resultSet.getString("product_image_url"));
                     return product;

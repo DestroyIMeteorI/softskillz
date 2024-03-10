@@ -3,11 +3,11 @@ package com.softskillz.models;
 import java.time.LocalDateTime;
 
 public class Product {
-    private int productId; // 改為int以匹配SQL中的INT類型
+    private int productId; 
     private String productName;
     private String productDescription;
     private int categoryId;
-    private double productPrice;
+    private int productPrice;
     private int productStock;
     private String productImageUrl;
     private String productTargetAudience;
@@ -47,11 +47,11 @@ public class Product {
         this.categoryId = categoryId;
     }
 
-    public double getProductPrice() {
+    public int getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(double productPrice) {
+    public void setProductPrice(int productPrice) {
         this.productPrice = productPrice;
     }
 

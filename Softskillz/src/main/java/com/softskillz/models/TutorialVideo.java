@@ -4,14 +4,13 @@ import java.time.LocalDateTime;
 
 public class TutorialVideo {
     private Long videoId;
-    private Long productId; // 對應於SQL的product_id欄位
-    private String videoTitle; // SQL中為video_title
-    private String videoThumbnailUrl; // SQL中為video_thumbnail_url
-    private String videoUrl; // SQL中為video_url
-    private String videoDescription; // SQL中為video_description
-    private LocalDateTime videoUploadDate; // 已經正確使用了LocalDateTime
+    private Long productId; 
+    private String videoTitle; 
+    private String videoThumbnailUrl; 
+    private String videoUrl; 
+    private String videoDescription; 
+    private LocalDateTime videoUploadDate; 
 
-    // Getters and Setters
     public Long getVideoId() {
         return videoId;
     }
