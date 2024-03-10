@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="C:/Users/Destr/Desktop/JDBC/jdbc_jar/c3p0-0.9.5.5/lib/c3p0-0.9.5.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Destr/Desktop/JDBC/jdbc_jar/c3p0-0.9.5.5/lib/c3p0-oracle-thin-extras-0.9.5.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Destr/Desktop/JDBC/jdbc_jar/c3p0-0.9.5.5/lib/mchange-commons-java-0.2.19.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Destr/git/repository/Softskillz/src/main/webapp/WEB-INF/lib/jstl-1.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

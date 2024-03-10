@@ -38,7 +38,8 @@ public class MallInsert extends HttpServlet {
         
         // 設定新增結果屬性並重定向到 CRUD 結果顯示頁面
         request.getSession().setAttribute("crudResult", isInserted ? "Insert successful" : "Insert failed");
-        response.sendRedirect("/Softskillz/crudResult.jsp");
+        response.sendRedirect(request.getContextPath() + "/mall/admin/product/crudResult.jsp");
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

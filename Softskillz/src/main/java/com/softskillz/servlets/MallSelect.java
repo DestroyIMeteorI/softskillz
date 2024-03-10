@@ -2,13 +2,11 @@ package com.softskillz.servlets;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.softskillz.dao.ProductDAO;
 import com.softskillz.models.Product;
 
@@ -25,7 +23,8 @@ public class MallSelect extends HttpServlet {
         request.setAttribute("products", products);
         
         // 將請求轉發到顯示商品的頁面
-        request.getRequestDispatcher("productDisplay.jsp").forward(request, response);
+        request.getRequestDispatcher("/mall/admin/product/productDisplay.jsp").forward(request, response);
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

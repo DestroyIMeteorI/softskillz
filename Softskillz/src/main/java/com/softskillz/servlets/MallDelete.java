@@ -30,7 +30,8 @@ public class MallDelete extends HttpServlet {
         
         // 設定刪除結果屬性並重定向到 CRUD 結果顯示頁面
         request.getSession().setAttribute("crudResult", isDeleted ? "Delete successful" : "Delete failed");
-        response.sendRedirect("/Softskillz/crudResult.jsp");
+        response.sendRedirect(request.getContextPath() + "/mall/admin/product/crudResult.jsp");
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

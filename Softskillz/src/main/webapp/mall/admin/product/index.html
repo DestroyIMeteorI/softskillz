@@ -113,7 +113,7 @@
             <nav>
                 <ul>
                     <li class="current"><a href="index.html">首頁</a></li>
-                    <li><a href="crudResult.jsp">結果</a></li>
+                    <li><a href="MallSelect">查詢產品</a></li>
                 </ul>
             </nav>
         </div>
@@ -121,7 +121,7 @@
     
     <div class="container">
         <h2>新增產品</h2>
-        <form action="/Softskillz/MallInsert" method="post" onsubmit="return validateForm()">
+        <form action="MallInsert" method="post" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="name">產品名稱：</label>
                 <input type="text" id="name" name="name" required>
@@ -144,6 +144,12 @@
             </div>
             <input type="submit" value="新增" class="button">
         </form>
+    </div>
+    
+    <div class="container">
+        <h2>管理產品</h2>
+        <a href="productDisplay.jsp" class="button">查詢產品</a>
+        <p>請透過查詢頁面來執行更新和刪除操作。</p>
     </div>
 
     <script>

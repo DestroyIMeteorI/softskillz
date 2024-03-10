@@ -11,7 +11,7 @@ public class DatabaseUtil {
             // 建立 c3p0 連線池實例
             ComboPooledDataSource cpds = new ComboPooledDataSource();
             cpds.setDriverClass("com.microsoft.sqlserver.jdbc.SQLServerDriver"); // 設定 JDBC 驅動
-            cpds.setJdbcUrl("jdbc:sqlserver://localhost:1433;databaseName=softskillzdb"); // 設定資料庫 URL
+            cpds.setJdbcUrl("jdbc:sqlserver://localhost:1433;databaseName=softskillzdb;encrypt=false"); // 設定資料庫 URL
             cpds.setUser("meteor2"); // 設定資料庫用戶名
             cpds.setPassword("1397"); // 設定資料庫密碼
 
