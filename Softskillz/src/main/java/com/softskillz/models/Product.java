@@ -14,7 +14,6 @@ public class Product {
     private LocalDateTime productCreateDate;
     private LocalDateTime productUpdateDate;
 
-    // Getter and Setter
     public int getProductId() {
         return productId;
     }
