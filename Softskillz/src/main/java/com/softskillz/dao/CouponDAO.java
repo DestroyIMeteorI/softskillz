@@ -1,5 +1,9 @@
 package com.softskillz.dao;
 
+import com.softskillz.models.Coupon;
+import com.softskillz.util.DatabaseUtil;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,20 +12,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.softskillz.models.Coupon;
-
 public class CouponDAO {
 
-    private Connection connection;
+    private DataSource dataSource;
 
-    public CouponDAO(Connection connection) {
-        this.connection = connection;
+    public CouponDAO() {
+        this.dataSource = DatabaseUtil.getDataSource();
     }
 
     public List<Coupon> getAllCoupons() {
         List<Coupon> coupons = new ArrayList<>();
         String sql = "SELECT * FROM coupon";
-        try (PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Coupon coupon = new Coupon();
@@ -47,7 +50,8 @@ public class CouponDAO {
 
     public boolean addCoupon(Coupon coupon) {
         String sql = "INSERT INTO coupon (coupon_code, coupon_description, coupon_usage_limit, coupon_usage_status, coupon_valid_from, coupon_valid_to, coupon_discount, coupon_discount_type, coupon_conditions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, coupon.getCouponCode());
             statement.setString(2, coupon.getCouponDescription());
             statement.setInt(3, coupon.getCouponUsageLimit());
@@ -67,7 +71,8 @@ public class CouponDAO {
 
     public boolean updateCoupon(Coupon coupon) {
         String sql = "UPDATE coupon SET coupon_code=?, coupon_description=?, coupon_usage_limit=?, coupon_usage_status=?, coupon_valid_from=?, coupon_valid_to=?, coupon_discount=?, coupon_discount_type=?, coupon_conditions=? WHERE coupon_id=?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, coupon.getCouponCode());
             statement.setString(2, coupon.getCouponDescription());
             statement.setInt(3, coupon.getCouponUsageLimit());
@@ -88,7 +93,8 @@ public class CouponDAO {
 
     public boolean deleteCoupon(int couponId) {
         String sql = "DELETE FROM coupon WHERE coupon_id=?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, couponId);
             int rowsDeleted = statement.executeUpdate();
             return rowsDeleted > 0;

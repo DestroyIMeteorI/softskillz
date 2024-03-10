@@ -1,6 +1,9 @@
 package com.softskillz.dao;
 
 import com.softskillz.models.Merchandise;
+import com.softskillz.util.DatabaseUtil;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,16 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MerchandiseDAO {
-    private Connection connection;
+    private DataSource dataSource;
 
-    public MerchandiseDAO(Connection connection) {
-        this.connection = connection;
+    public MerchandiseDAO() {
+        this.dataSource = DatabaseUtil.getDataSource();
     }
 
     public List<Merchandise> getAllMerchandises() {
         List<Merchandise> merchandises = new ArrayList<>();
         String sql = "SELECT * FROM merchandise";
-        try (PreparedStatement statement = connection.prepareStatement(sql);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Merchandise merchandise = new Merchandise();
@@ -38,7 +42,8 @@ public class MerchandiseDAO {
 
     public boolean addMerchandise(Merchandise merchandise) {
         String sql = "INSERT INTO merchandise (product_id, merchandise_name, merchandise_price, merchandise_stock_quantity, merchandise_description, merchandise_image_url) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, merchandise.getProductId());
             statement.setString(2, merchandise.getMerchandiseName());
             statement.setInt(3, merchandise.getMerchandisePrice());
@@ -55,7 +60,8 @@ public class MerchandiseDAO {
 
     public boolean updateMerchandise(Merchandise merchandise) {
         String sql = "UPDATE merchandise SET product_id=?, merchandise_name=?, merchandise_price=?, merchandise_stock_quantity=?, merchandise_description=?, merchandise_image_url=? WHERE merchandise_id=?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, merchandise.getProductId());
             statement.setString(2, merchandise.getMerchandiseName());
             statement.setInt(3, merchandise.getMerchandisePrice());
@@ -73,7 +79,8 @@ public class MerchandiseDAO {
 
     public boolean deleteMerchandise(int merchandiseId) {
         String sql = "DELETE FROM merchandise WHERE merchandise_id=?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, merchandiseId);
             int rowsDeleted = statement.executeUpdate();
             return rowsDeleted > 0;
